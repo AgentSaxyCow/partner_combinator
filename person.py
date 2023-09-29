@@ -3,5 +3,11 @@ class Person:
         self.name=name
         self.partners=partners
 
-    def get_name(self): return self.name
-    def get_partners(self): return self.partners
+    def get_name(self): 
+        return self.name
+    def get_partners(self): 
+        return self.partners
+    def add_partner(self, new):
+        self.partners.append(new)
+    def clear_partners(self):
+        self.partners = []
