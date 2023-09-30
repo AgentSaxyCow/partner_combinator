@@ -1,6 +1,6 @@
 import json
 import os.path
-from person import Person
+from person import PeopleMatrix
 import random
 from time import time
 # person: name, previous_partners
@@ -38,21 +38,13 @@ def main():
 
 def load_people():
     with open('people.json', 'r') as json_file:
-        people_json = json.load(json_file)
-    people_data = people_json.get('people')
-    people = []
-    for p in people_data:
-        people.append(Person(p.get('name'), p.get('partners')))
+        json_data = json.load(json_file)
+    people = PeopleMatrix(json_data[0], json_data[1])
     return people
 
 def save_people(p):
-    list_people = []
-    for person in p:
-        dictionary = {"name": person.get_name(), "partners": person.get_partners()}
-        list_people.append(dictionary)
-    json_data = {"people": list_people}
+    json_data = [p.get_names(), p.get_matrix()]
     json_object = json.dumps(json_data, indent=4)
-
     with open("people.json", 'w') as json_file:
         json_file.write(json_object)
 
@@ -65,7 +57,7 @@ def create_person(p):
         partners.append(part)
         i += 1
         part = input(f"Partner {i}: ")
-    p.append(Person(name, partners)) 
+    p.append(PersonNode(name, partners)) 
 
 def delete_person(p):
     i = 0
