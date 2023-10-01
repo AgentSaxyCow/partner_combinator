@@ -30,6 +30,13 @@ def test_add_person():
     expected_matrix = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
     assert test_matrix.get_matrix() == expected_matrix
 
+def test_remove_person():
+    test_data = ["Eddie", "Grant", "Camden"]
+    test_matrix = PeopleMatrix(test_data)
+    test_matrix.add_partners("Eddie", "Camden")
+    test_matrix.remove_person("Grant")
+    expected_matrix = [[0, 1], [1, 0]]
+    assert test_matrix.get_matrix() == expected_matrix
 
 def test_print_matrix():
     test_data = ["Eddie", "Grant"]
