@@ -95,12 +95,19 @@ def create_partners(people):
         
         available_partners.remove(person)
 
-        tmp = people.get_not_partners(person)
-        for name in tmp:
-            if name not in available_partners:
-                tmp.remove(name)
-
+        not_partners = people.get_not_partners(person)
+        tmp = []
+        for name in available_partners:
+            if name in not_partners:
+                tmp.append(name)
+        print(not_partners)
+        print(available_partners)    
+        print(tmp)
         partner = random.choice(tmp)
+
+        #print(partner)
+        #print(available_partners)
+        #print(tmp)
         available_partners.remove(partner)
         
         print(f"{person} <-> {partner}")
