@@ -41,12 +41,6 @@ def main():
     #save_people(people)
 
 
-def create_matrix(p):
-    name = input("Name: ")
-    while name not in ['q', '']:
-        p.add_person(name)
-        name = input("Name: ")
-
 def delete_person(p):
     i = 0
     for person in p.get_names():
