@@ -13,44 +13,6 @@ def main():
     root = tb.Window(themename="superhero")
     App(root)
     root.mainloop()
-    # main menu
-    #while True:
-    #    print("person_combinator:")
-    #    print("1. Add People")
-    #    print("2. Delete Person")
-    #    print("3. Fill Previous Partners")
-    #    print("4. Create Prayer Partners")
-    #    print("5. Clear all partners")
-    #    print("6. Print people")
-    #    print("7. Exit")
-    #    choice = input("Please select one of the above [1-6]: ")
-    #    if choice == '1':
-    #        create_matrix(people)
-    #    elif choice == '2':
-    #        delete_person(people)
-    #    elif choice == '3':
-    #        fill_partners(people)
-    #    elif choice == '4':
-    #        create_partners(people)
-    #    elif choice == '5':
-    #        people.remove_all_partners()
-    #    elif choice == '6':
-    #        people.print_matrix()
-    #    elif choice == '7':
-    #        break
-    #save_people(people)
-
-
-def delete_person(p):
-    i = 0
-    for person in p.get_names():
-        print(f"{i+1}. {person}")
-        i += 1
-    num = int(input("Which do you want to delete?: "))
-    while (num != -1) and (num > i and i < 0):
-        num = int(input("Wrong input, try again: "))
-    if num != -1:
-        p.remove_person(p.get_names()[num-1])
 
 def fill_partners(p):
     names = p.get_names()
@@ -91,9 +53,6 @@ def create_partners(people):
         print(tmp)
         partner = random.choice(tmp)
 
-        #print(partner)
-        #print(available_partners)
-        #print(tmp)
         available_partners.remove(partner)
         
         print(f"{person} <-> {partner}")
