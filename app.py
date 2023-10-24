@@ -8,12 +8,14 @@ from person import PeopleMatrix
 import random
 from time import time
 
+save_file = 'test.json'
+
 class App:
     def __init__(self, master):
         self.master = master
         self.master.title("Multipages")
         self.master.geometry("800x800")
-        if os.path.exists('./people.json'):
+        if os.path.exists(f'./{save_file}'):
             self.people = self.load_people()
         else:
             self.people = PeopleMatrix([])
@@ -146,11 +148,19 @@ class App:
         self.clearscr()
         page = self.create_page()
         self.create_partners(page)
+        succbtn = tb.Label(page, font=("Calibri", 16), bootstyle="success")
+        undobtn = tb.Button(page, text="Undo", command=partial(self.undo, succbtn))
+        undobtn.pack(pady=10)
         returnbtn = tb.Button(page, text="Return", command=self.home)
         returnbtn.pack(pady=10)
+        succbtn.pack(pady=10)
+    def undo(self, text):
+        text.config(text="Success")
+        self.people.undo()
     
     def create_partners(self, page):
         available_partners = []
+        prev_action = []
         for name in self.people.get_names():
             available_partners.append(name)
         random.seed(time())
@@ -178,12 +188,17 @@ class App:
             tb.Label(page, text=f"{person} <-> {partner}", font=("Calibri", 14), bootstyle="default").pack(pady=10)
 
             self.people.add_partners(person, partner)
+            prev_action.append((person, partner))
         
         if len(available_partners) == 3:
             tb.Label(page, text=f"{available_partners[0]} <-> {available_partners[1]} <-> {available_partners[2]}", font=("Calibri", 14), bootstyle="default").pack(pady=10)
             self.people.add_partners(available_partners[0], available_partners[1])
             self.people.add_partners(available_partners[0], available_partners[2])
             self.people.add_partners(available_partners[1], available_partners[2])
+            prev_action.append((available_partners[0], available_partners[1]))
+            prev_action.append((available_partners[0], available_partners[2]))
+            prev_action.append((available_partners[1], available_partners[2]))
+        self.people.add_undo(prev_action)
     
     def clearscr(self):
         for i in self.master.winfo_children():
@@ -194,7 +209,7 @@ class App:
         return page
     
     def load_people(self):
-        with open('people.json', 'r') as json_file:
+        with open(save_file, 'r') as json_file:
             json_data = json.load(json_file)
         people = PeopleMatrix(json_data[0], json_data[1])
         return people
@@ -202,7 +217,7 @@ class App:
     def save_people(self):
         json_data = [self.people.get_names(), self.people.get_matrix()]
         json_object = json.dumps(json_data, indent=4)
-        with open("people.json", 'w') as json_file:
+        with open(save_file, 'w') as json_file:
             json_file.write(json_object)
 
     def exit_app(self):

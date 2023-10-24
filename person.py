@@ -11,6 +11,7 @@ class PeopleMatrix:
         else:
             self.matrix = matrix
         self.l = len(names)
+        self.undo_list = []
 
 
     def get_names(self): return self.names
@@ -53,6 +54,16 @@ class PeopleMatrix:
     def remove_partners(self, name0, name1):
         index0, index1 = self.get_index(name0, name1)
         self.update_matrix(index0, index1, 0)
+    
+    def add_undo(self, ulist):
+        self.undo_list.append(ulist)
+    
+    def undo(self):
+        if len(self.undo_list) != 0:
+            for i in self.undo_list[len(self.undo_list)-1]:
+                self.remove_partners(i[0], i[1])
+            self.undo_list.pop()
+
 
     def not_partners(self, name0, name1):
         index0, index1 = self.get_index(name0, name1)
