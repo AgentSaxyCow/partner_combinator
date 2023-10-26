@@ -8,7 +8,7 @@ from person import PeopleMatrix
 import random
 from time import time
 
-save_file = 'test.json'
+save_file = 'people.json'
 
 class App:
     def __init__(self, master):
